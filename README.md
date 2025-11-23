@@ -1,170 +1,289 @@
-# Smith Tools 🛠️
+# Smith Tools
 
-**Context-efficient Swift build analysis and optimization tools for AI development workflows**
+> **Professional Swift development tools and validation frameworks for modern development**
 
-[![Swift Version](https://img.shields.io/badge/Swift-6.0-orange.svg)](https://swift.org)
-[![Platform](https://img.shields.io/badge/Platform-mOS%20%7C%20iOS%20%7C%20visionOS-lightgrey.svg)](https://developer.apple.com)
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+Smith Tools provides a comprehensive suite of professional-grade utilities for Swift developers, focusing on architectural validation, build analysis, and development workflow optimization.
 
-Smith Tools is a comprehensive suite of build analysis tools designed for Swift and iOS development, providing **30-60% token reduction** for AI agents and development workflows.
+```mermaid
+graph TD
+    A[Smith CLI] --> B[smith-validation]
+    A --> C[smith-core]
+    A --> D[smith-spmsift]
+    A --> E[smith-sbsift]
+    A --> F[smith-xcsift]
+    B --> G[MaxwellsTCARules]
+    B --> H[SmithValidationCore]
 
-## 🎯 **Why Smith Tools?**
-
-**For AI Agents & Claude:**
-- **Context-efficient output** - JSON-structured analysis with minimal tokens
-- **Smith Framework integration** - Consistent data models across all tools
-- **Build hang detection** - Automatic identification of common build issues
-- **Performance optimization** - Pinpoint compilation bottlenecks
-
-**For Developers:**
-- **Fast issue diagnosis** - Quick identification of build problems
-- **DerivedData corruption detection** - Prevents common Xcode issues
-- **Multi-platform support** - macOS, iOS, visionOS compatibility
-- **Modern Swift 6.0** - Latest language features and best practices
-
-## 📦 **Ecosystem Overview**
-
-```
-Smith Tools Ecosystem
-├── smith-core          🔧 Core framework and shared data models
-├── smith-cli           🎛️  Unified CLI interface for all tools
-├── smith-spmsift       📦 Swift Package Manager analysis
-├── smith-sbsift        ⚡ Swift build output analysis
-├── smith-xcsift        🏗️  Xcode build output analysis
-└── smith-skill         🧠 Claude Code skill with Smith Framework patterns
+    style A fill:#4CAF50,stroke:#2E7D32,stroke-width:3px
+    style B fill:#2196F3,stroke:#1565C0,stroke-width:2px
+    style C fill:#FF9800,stroke:#F57C00,stroke-width:2px
+    style H fill:#FF9800,stroke:#F57C00,stroke-width:2px
 ```
 
-## 🚀 **Quick Start**
+## 🚀 Quick Start
 
-### **Installation**
-
-#### **🍺 Homebrew (Recommended)**
 ```bash
-# Add the tap
+# Install the complete Smith Tools suite
+brew tap Smith-Tools/smith
+brew install smith-cli smith-validation
+
+# Start using smith-cli as your unified interface
+smith-cli --help
+```
+
+## 📦 Components
+
+### 🏗️ CLI & Orchestration
+- **smith-cli**: **Primary unified interface** for all Smith Tools
+  - Orchestrates validation, analysis, and optimization workflows
+  - Clean architecture with no SwiftSyntax dependencies (v1.0.5+)
+  - Available via `brew install smith-cli`
+
+```mermaid
+flowchart LR
+    A[User: smith-cli command] --> B{Project Type Detection}
+    B -->|SPM Package| C[Swift Package Analysis]
+    B -->|Xcode Project| D[Xcode Build Analysis]
+    B -->|Unknown| E[General Analysis]
+
+    C --> F[smith-validation]
+    D --> G[smith-xcsift]
+    E --> H[General Diagnostics]
+
+    F --> I[✅ TCA Validation Results]
+    G --> J[✅ Xcode Build Insights]
+    H --> K[✅ Environment Info]
+
+    I --> L[smith-cli Output]
+    J --> L
+    K --> L
+
+    style A fill:#E3F2FD,stroke:#1976D2,stroke-width:2px
+    style F fill:#E8F5E8,stroke:#4CAF50,stroke-width:2px
+    style L fill:#FFF3E0,stroke:#FF9800,stroke-width:2px
+```
+
+### 🔍 Validation Frameworks
+- **smith-validation**: **Pluggable architectural validation engine**
+  - Rules-based validation for Swift code architecture
+  - Supports custom validation rules and TCA patterns
+  - Available via `brew install smith-validation`
+- **SmithValidationCore**: Core framework for Swift code analysis
+  - AST parsing and analysis utilities
+  - Shared validation infrastructure
+
+### 📊 Analysis Tools
+- **smith-core**: **Universal Swift patterns library**
+  - Reusable patterns and utilities for any Swift project
+  - Independent of specific architectures
+  - Foundation for Smith Tools ecosystem
+- **smith-spmsift**: Swift Package Manager build analysis
+- **smith-sbsift**: Swift build system analysis
+- **smith-xcsift**: Xcode build and project analysis
+
+### 🔎 Documentation & Search
+- **sosumi**: **Apple developer documentation search**
+  - Comprehensive WWDC session and documentation search
+  - Apple developer resources and references
+
+## 🎯 Key Features
+
+### smith-cli - Unified Interface
+- **Single command access** to all Smith Tools functionality
+- **Smart project detection** (SPM, Xcode, Workspace)
+- **Build monitoring** with hang detection and performance analysis
+- **TCA architectural validation** through smith-validation integration
+- **Development environment analysis** and optimization recommendations
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant S as smith-cli
+    participant V as smith-validation
+    participant C as smith-core
+    participant H as Homebrew
+
+    U->>H: brew install smith-cli
+    U->>S: smith-cli validate ./MyProject
+    S->>C: Detect project type
+    C-->>S: Swift Package detected
+
+    S->>V: Call smith-validation as subprocess
+    V->>V: Parse Swift files
+    V->>V: Apply validation rules
+    V-->>S: Validation results
+
+    S->>S: Format and display results
+    S-->>U: ✅ Validation Complete
+
+    Note over V: No SwiftSyntax leakage in smith-cli
+    Note over S: Clean orchestration architecture
+```
+
+### smith-validation - Architectural Validation
+- **Pluggable rule system** for custom validation
+- **TCA-specific rules** via MaxwellsTCARules
+- **Swift code analysis** with detailed reporting
+- **CI/CD integration** ready
+
+### Build Analysis Tools
+- **Performance optimization** recommendations
+- **Dependency graph analysis**
+- **Build bottleneck detection**
+- **Resource usage monitoring`
+
+## 🛠️ Installation
+
+### Homebrew (Recommended)
+```bash
+# Add the Smith Tools tap
 brew tap Smith-Tools/smith
 
-# Install all Smith Tools
-brew install smith-core smith-cli smith-spmsift smith-sbsift smith-xcsift
-
-# Or install individual tools
-brew install smith-cli          # Unified interface
-brew install smith-spmsift      # SPM analysis
-brew install smith-sbsift       # Swift build analysis
-brew install smith-xcsift       # Xcode build analysis
+# Install individual components
+brew install smith-cli          # Unified CLI interface
+brew install smith-validation     # Validation engine
+brew install smith-core          # Core utilities
 ```
 
-#### **📦 Swift Package Manager**
+### Swift Package Integration
+Add to your `Package.swift`:
+
 ```swift
-// Add to your Package.swift dependencies
 dependencies: [
-    .package(url: "https://github.com/Smith-Tools/smith-core", from: "1.0.0"),
-    .package(url: "https://github.com/Smith-Tools/smith-cli", from: "1.0.0"),
-    .package(url: "https://github.com/Smith-Tools/smith-spmsift", from: "1.0.0"),
-    .package(url: "https://github.com/Smith-Tools/smith-sbsift", from: "1.0.0"),
-    .package(url: "https://github.com/Smith-Tools/smith-xcsift", from: "1.0.0")
+    .package(url: "https://github.com/Smith-Tools/smith-core", from: "1.1.0"),
+    .package(url: "https://github.com/Smith-Tools/smith-validation", from: "1.0.7"),
 ]
 ```
 
-#### **🧠 Claude Code Skill**
-```bash
-# Install Smith Framework skill for Claude Code
-git clone https://github.com/Smith-Tools/smith-skill.git ~/.claude/skills/smith
+## 📖 Usage Examples
 
-# Or clone to custom directory
-git clone https://github.com/Smith-Tools/smith-skill.git ~/my-claude-skills/smith
+### Project Analysis with smith-cli
+```bash
+# Analyze current project
+smith-cli analyze
+
+# Validate architecture (includes TCA validation)
+smith-cli validate
+
+# Detect project type and tools
+smith-cli detect
+
+# Monitor build with hang detection
+smith-cli monitor-build
 ```
 
-### **Usage Examples**
+### Swift Package Integration
+```swift
+import SmithCore
+import SmithValidation
 
-**Analyze any Swift project:**
-```bash
-smith-modern-validation.sh . --json
+// Quick project analysis
+let analysis = SmithCore.quickAnalyze(at: ".")
+print("Files: \(analysis.metrics.fileCount ?? 0)")
+print("Dependencies: \(analysis.dependencyGraph.targetCount)")
 ```
 
-**Xcode build analysis:**
-```bash
-xcodebuild build -scheme MyApp 2>&1 | smith-xcsift --warnings
+### Custom Validation Rules
+```swift
+import SmithValidationCore
+
+struct CustomRule: ValidatableRule {
+    func validate(sourceFile: SourceFileSyntax) -> ViolationCollection {
+        // Custom validation logic
+        return ViolationCollection(violations: [])
+    }
+}
 ```
 
-**Swift Package Manager analysis:**
-```bash
-swift package dump-package | smith-spmsift parse
-smith-spmsift analyze --json
+## 🔄 Recent Updates
+
+### v1.0.5 Architecture Improvements (November 2024)
+- **smith-cli**: Removed SwiftSyntax dependencies for cleaner builds
+- **smith-cli**: Enhanced orchestration with smith-validation subprocess calls
+- **smith-core**: Evolved to universal Swift patterns library
+- **All repositories**: Comprehensive cleanup and professional organization
+
+```mermaid
+graph LR
+    subgraph "Before v1.0.5"
+        A1[smith-cli] --> B1[SwiftSyntax]
+        A1 --> C1[TCA Rules]
+        A1 --> D1[SmithCore]
+        B1 --> E1[Build Issues]
+        C1 --> F1[Validation Logic]
+        D1 --> G1[Analysis Logic]
+    end
+
+    subgraph "After v1.0.5"
+        A2[smith-cli] --> B2[smith-validation subprocess]
+        A2 --> C2[smith-core]
+        B2 --> D2[MaxwellsTCARules]
+        B2 --> E2[SmithValidationCore]
+        C2 --> F2[Universal Patterns]
+        D2 --> G2[✅ Clean Validation]
+        E2 --> H2[✅ AST Analysis]
+    end
+
+    A1 -.-> A2: Architecture Fix
+    B1 -.-> B2: Subprocess Call
+    C1 --> C2: Evolved Purpose
+    D1 --> D2: Same Logic
+    E1 -.-> E2: Proper Separation
+    F1 -.-> F2: Internal Only
+    G1 -.-> G2: Same Results
+
+    style A1 fill:#FFEBEE,stroke:#FF5252
+    style A2 fill:#E8F5E8,stroke:#4CAF50
+    style B2 fill:#E8F5E8,stroke:#4CAF50
+    style D2 fill:#E3F2FD,stroke:#1976D2
 ```
 
-**Swift build analysis:**
-```bash
-swift build 2>&1 | smith-sbsift parse
-swift test 2>&1 | smith-sbsift parse --format summary
-```
+### Key Architecture Changes
+- **smith-cli** now acts as orchestrator, not embedded validation
+- **smith-validation** handles all architectural validation internally
+- **smith-core** provides universal patterns for any Swift project
+- **Clean repositories** with proper .gitignore and no backup files
 
-## 🔧 **Tools & Capabilities**
+## 🌟 Why Smith Tools?
 
-| Tool | Primary Use | Key Features |
-|------|-------------|--------------|
-| **smith-cli** | Unified interface | Project detection, tool orchestration |
-| **smith-spmsift** | SPM analysis | Dependency graphs, circular import detection |
-| **smith-sbsift** | Swift build analysis | File timing, bottleneck identification |
-| **smith-xcsift** | Xcode build analysis | Error parsing, warning detection, OSLog integration |
-| **smith-core** | Foundation | Shared data models, utilities |
+### For Swift Developers
+- **Professional-grade analysis** with actionable insights
+- **TCA architectural validation** with expert rules
+- **Build optimization** recommendations based on real projects
+- **Development workflow** integration and automation
 
-## 📊 **Real-World Impact**
+### For Teams
+- **Consistent validation** across all Swift projects
+- **CI/CD integration** ready validation workflows
+- **Performance monitoring** and optimization guidance
+- **Documentation search** for rapid development
 
-**Case Study: Scroll Project (166 targets)**
-- **Issue**: 12GB DerivedData corruption causing build hangs
-- **Solution**: `smith-modern-validation.sh` detected corruption automatically
-- **Result**: Immediate fix with `rm -rf ~/Library/Developer/Xcode/DerivedData`
+### For Architecture Quality
+- **Rule-based validation** for architectural patterns
+- **Customizable rules** for project-specific needs
+- **Comprehensive analysis** of Swift codebases
+- **Professional reporting** for technical reviews
 
-**Performance Metrics:**
-- **Token Reduction**: 30-60% less context vs raw build output
-- **Analysis Speed**: 10x faster than manual investigation
-- **Error Detection**: 95% accuracy for common build issues
+## 📚 Documentation
 
-## 🛠️ **Development Environment**
+- **[smith-cli Guide](https://github.com/Smith-Tools/smith-cli)**: Complete CLI usage
+- **[smith-validation Guide](https://github.com/Smith-Tools/smith-validation)**: Validation rules and customization
+- **[smith-core API](https://github.com/Smith-Tools/smith-core)**: Core utilities and patterns
+- **[Homebrew Tap](https://github.com/Smith-Tools/homebrew-smith)**: Installation and updates
 
-- **Swift Version**: 6.0+
-- **Platforms**: macOS 13.0+, iOS 16.0+, visionOS 1.0+
-- **Xcode**: 14.0+
-- **Dependencies**: Swift ArgumentParser 1.3.0+
+## 🤝 Contributing
 
-## 📚 **Documentation**
+Smith Tools welcomes contributions! See individual project repositories for:
+- **Development guidelines** and coding standards
+- **Issue reporting** and feature requests
+- **Pull request process** and review criteria
+- **Architecture discussions** and design decisions
 
-- **[Getting Started Guide](docs/getting-started.md)**
-- **[API Reference](docs/api-reference.md)**
-- **[Integration Patterns](docs/integration-patterns.md)**
-- **[Contributing Guide](CONTRIBUTING.md)**
+## 📄 License
 
-## 🤝 **Contributing**
-
-Smith Tools follows the [Smith Framework](https://github.com/Smith-Tools/smith-framework) discipline for development.
-
-```bash
-# Development setup
-git clone https://github.com/Smith-Tools/smith-core
-cd smith-core
-swift build
-
-# Run tests
-swift test
-```
-
-## 📄 **License**
-
-Smith Tools is available under the [MIT License](LICENSE).
-
-## 🔗 **Links**
-
-- **[Smith Tools Organization](https://github.com/Smith-Tools)** - All repositories
-- **[Homebrew Tap](https://github.com/Smith-Tools/homebrew-smith)** - Install via Homebrew
-- **[smith-core](https://github.com/Smith-Tools/smith-core)** - Core framework
-- **[smith-cli](https://github.com/Smith-Tools/smith-cli)** - Unified interface
-- **[smith-spmsift](https://github.com/Smith-Tools/smith-spmsift)** - SPM analysis
-- **[smith-sbsift](https://github.com/Smith-Tools/smith-sbsift)** - Swift build analysis
-- **[smith-xcsift](https://github.com/Smith-Tools/smith-xcsift)** - Xcode build analysis
-- **[smith-skill](https://github.com/Smith-Tools/smith-skill)** - Claude Code skill
-- **[Issues](https://github.com/Smith-Tools/smith-core/issues)** - Bug reports and feature requests
-- **[Discussions](https://github.com/Smith-Tools/Smith-Tools/discussions)** - Community discussions
+All Smith Tools components are released under the MIT License. See individual project repositories for specific licensing details.
 
 ---
 
-**Built for the modern Swift development workflow with AI integration in mind.**
+**Built with ❤️ by the Smith Tools team**
+*Professional Swift development tools for the modern developer*
